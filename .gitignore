@@ -1,0 +1,27 @@
+Compiled class file
+*.class
+
+# Log file
+*.log
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# STS (Spring Tool Suite)
+.springBeans
+
+# Maven 
+target/
+
+# eclipse project file
+.settings/
+.classpath
+.project
+
+# OS
+.DS_Store
