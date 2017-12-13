@@ -9,9 +9,11 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import org.apache.log4j.Logger;
 import org.apache.log4j.NDC;
 
 public class NdcLogFilter implements Filter {
+	private static final Logger logger = Logger.getLogger(NdcLogFilter.class);
 
 	public void destroy() {
 
@@ -19,15 +21,15 @@ public class NdcLogFilter implements Filter {
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
+		logger.debug("This is the NDC filter");
 		long ndcId = System.currentTimeMillis();
-		NDC.push("[" + ndcId + "]");
+		NDC.push("NDC ID="+ndcId);
 		chain.doFilter(request, response);
 		NDC.pop();
 		NDC.remove();
 	}
 
-	public void init(FilterConfig arg0) throws ServletException {
+	public void init(FilterConfig fConfig) throws ServletException {
 
 	}
-
 }
