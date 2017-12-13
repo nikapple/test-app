@@ -23,7 +23,7 @@ public class EndpointsController {
 	
 	@RequestMapping(value="/endpointdoc", method=RequestMethod.GET)
 	public String displayEndpoints() {
-		return "endpoints";
+		return "app-endpoints";
 	}
 	
 	@ResponseBody
