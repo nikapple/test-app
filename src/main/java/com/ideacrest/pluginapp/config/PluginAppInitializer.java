@@ -2,8 +2,10 @@ package com.ideacrest.pluginapp.config;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.EnumSet;
 import java.util.Properties;
 
+import javax.servlet.DispatcherType;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
@@ -13,6 +15,7 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.servlet.DispatcherServlet;
 
 import com.ideacrest.pluginapp.config.WebMvcConfig;
+import com.ideacrest.pluginapp.filters.NdcLogFilter;
 
 public class PluginAppInitializer  implements WebApplicationInitializer {
 
@@ -35,7 +38,10 @@ public class PluginAppInitializer  implements WebApplicationInitializer {
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/code-analysis-utils/*");
         dispatcherServlet.scan(prop.getProperty("base-package"),"com.ideacrest.pluginapp");
-        dispatcherServlet.getApplicationName();
+        
+        // Register NDC Log Filter
+        servletContext.addFilter("NdcLogFilter", NdcLogFilter.class);
+        servletContext.getFilterRegistration("NdcLogFilter").addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/*");
 	}
 
 }
