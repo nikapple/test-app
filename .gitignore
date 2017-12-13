@@ -25,3 +25,6 @@ target/
 
 # OS
 .DS_Store
+
+# ignore views
+views/
