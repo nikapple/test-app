@@ -9,11 +9,13 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-import org.apache.log4j.Logger;
 import org.apache.log4j.NDC;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class NdcLogFilter implements Filter {
-	private static final Logger logger = Logger.getLogger(NdcLogFilter.class);
+	
+	private static final Logger logger = LoggerFactory.getLogger(NdcLogFilter.class);
 
 	public void destroy() {
 
@@ -27,6 +29,7 @@ public class NdcLogFilter implements Filter {
 		chain.doFilter(request, response);
 		NDC.pop();
 		NDC.remove();
+		logger.debug("\nLeaving the NDC filter\n");
 	}
 
 	public void init(FilterConfig fConfig) throws ServletException {

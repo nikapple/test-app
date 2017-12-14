@@ -3,6 +3,7 @@ package com.ideacrest.pluginapp.controllers;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,10 +16,13 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 @Controller
 public class EndpointsController {
 
-	private RequestMappingHandlerMapping handlerMapping;
-
-	public EndpointsController(RequestMappingHandlerMapping handlerMapping) {
-		this.handlerMapping = handlerMapping;
+	public EndpointsController() {}
+	
+	@Autowired
+	private RequestMappingHandlerMapping requestMappingHandlerMapping;
+	
+	public EndpointsController(RequestMappingHandlerMapping requestMappingHandlerMapping) {
+		this.requestMappingHandlerMapping = requestMappingHandlerMapping;
 	}
 	
 	@RequestMapping(value="/endpointdoc", method=RequestMethod.GET)
@@ -29,7 +33,7 @@ public class EndpointsController {
 	@ResponseBody
 	@RequestMapping(value = "/endpoints", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
 	public Map<String, Map<String,String>> getEndpoints() {
-		return getEndpointsJson(this.handlerMapping.getHandlerMethods());
+		return getEndpointsJson(this.requestMappingHandlerMapping.getHandlerMethods());
 	}
 	
 	private Map<String, Map<String,String>> getEndpointsJson(Map<RequestMappingInfo, HandlerMethod> handlerMethodsMap) {
